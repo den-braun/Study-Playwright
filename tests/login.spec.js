@@ -22,7 +22,7 @@ test.describe('Login, verify elements and add items to cart', () => {
         await expect(shoppingCart).toBeVisible();
     
         //quantity products
-        const productItems = page.locator('.inventory_item');
+        const productItems = page.locator('.inventory_item'); 
         const productCount = await productItems.count();
         expect(productCount).toBeGreaterThan(1);
 
