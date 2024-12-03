@@ -3,13 +3,13 @@ const { test, expect } = require('@playwright/test');
 test.describe('Login, verify elements and add items to cart', () => {
 
     test.beforeEach('Perform login to Saucedemo', async ({ page }) => {
-        await page.goto('https://www.saucedemo.com/');
+        await page.goto('/');
     
         //search by locator login form
         await page.locator('[data-test="username"]').fill('standard_user');
         await page.locator('[data-test="password"]').fill('secret_sauce');
         await page.locator('[data-test="login-button"]').click();
-        await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
+        await expect(page).toHaveURL('/inventory.html');
     });
 
     test('Verify and quantity items on page', async ({ page }) => {
@@ -35,7 +35,7 @@ test.describe('Login, verify elements and add items to cart', () => {
         const firstProductName = firstProduct.locator('.inventory_item_name');
         const addToCartButton = firstProduct.locator('button:has-text("Add to cart")');
         await expect(firstProductName).toBeVisible();
-        const ProductName = await firstProductName.innerText();
+        const productName = await firstProductName.innerText();
         await addToCartButton.click();
 
         // Verify the Shopping Cart icon shows "1"
@@ -49,7 +49,7 @@ test.describe('Login, verify elements and add items to cart', () => {
 
         const cartProductLocator = page.locator('.cart_item .inventory_item_name').first();
         await expect(cartProductLocator).toBeVisible();
-        await expect(cartProductLocator).toHaveText(ProductName);
+        await expect(cartProductLocator).toHaveText(productName);
 
         // 5. Remove the product from the cart
         const removeButton = page.locator('button:has-text("Remove")');
